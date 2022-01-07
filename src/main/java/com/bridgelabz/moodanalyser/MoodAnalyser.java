@@ -1,5 +1,7 @@
 package com.bridgelabz.moodanalyser;
 
+import com.bridgelabz.moodanalyser.MoodAnalysisException.ExceptionType;
+
 public class MoodAnalyser {
 	String message;
 	public MoodAnalyser(){
@@ -9,15 +11,18 @@ public class MoodAnalyser {
 		super();
 		this.message = message;
 	}
-	public String analyseMood() {
+	public String analyseMood() throws MoodAnalysisException {
 		try {
-			if (message.contains("Sad")) {
+			if (message.length() == 0) {
+				throw new MoodAnalysisException(ExceptionType.ENTERED_EMPTY, "Enter Proper Message. EMPTY Not Allowed");
+			}
+			if (this.message.contains("Sad")) {
 				return "SAD";
-			}else {
+			} else {
 				return "HAPPY";
 			}
 		} catch (NullPointerException e) {
-			return "HAPPY";
+			throw new MoodAnalysisException(ExceptionType.ENTERED_NULL, "Enter Proper Message. NULL Not Allowed");
 		}
 	}
 }
